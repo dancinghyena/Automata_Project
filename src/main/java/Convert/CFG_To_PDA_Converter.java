@@ -7,7 +7,9 @@ import java.util.Set;
 
 public class CFG_To_PDA_Converter {
 
-    PDA convert(CFG cfg) {
+    public PDA convert(CFG cfg) {
+        State.resetIdCounter();
+
         PDA result = new PDA();
 
         State state1 = new State(false, true);
@@ -24,9 +26,7 @@ public class CFG_To_PDA_Converter {
         Set<Character> terminals = new HashSet<>();
 
         for (Production p : cfg.productions) {
-
             for (List<Character> entry : p.derivations) {
-
                 for (Character c : entry) {
                     if (!Character.isUpperCase(c)) {
                         terminals.add(c);
@@ -34,7 +34,6 @@ public class CFG_To_PDA_Converter {
                 }
 
                 List<Character> pushList = new ArrayList<>();
-
                 for (int i = entry.size() - 1; i >= 0; i--) {
                     pushList.add(entry.get(i));
                 }
@@ -45,8 +44,8 @@ public class CFG_To_PDA_Converter {
         }
 
         for (Character c : terminals) {
-            Transition terminal_t = new Transition(state2, state2, c, c, List.of());
-            result.addTransition(terminal_t);
+            Transition terminalT = new Transition(state2, state2, c, c, List.of());
+            result.addTransition(terminalT);
         }
 
         State state3 = new State(true, false);
@@ -58,7 +57,6 @@ public class CFG_To_PDA_Converter {
         return result;
     }
 
-    // Helper to nicely print a PDA (preserves overall structure)
     private static void printPDA(PDA pda, String testName) {
         System.out.println("=== PDA for Test: " + testName + " ===");
         System.out.println("States (" + pda.states.size() + "):");
@@ -78,63 +76,32 @@ public class CFG_To_PDA_Converter {
     public static void main(String[] args) {
         CFG_To_PDA_Converter converter = new CFG_To_PDA_Converter();
 
-        // ==================== TEST 1: {a^n b^n | n ≥ 0} ====================
-        // CFG: S → a S b | ε
         CFG cfg1 = new CFG('S');
         List<List<Character>> derivs1 = new ArrayList<>();
         derivs1.add(List.of('a', 'S', 'b'));
         derivs1.add(List.of());
-        Production p1 = new Production('S', derivs1);
-        cfg1.addProduction(p1);
+        cfg1.addProduction(new Production('S', derivs1));
+        printPDA(converter.convert(cfg1), "Test 1: S → aSb | ε   (a^n b^n)");
 
-        PDA pda1 = converter.convert(cfg1);
-        printPDA(pda1, "Test 1: S → aSb | ε   (a^n b^n)");
-
-        // ==================== TEST 2: Even-length palindromes over {a,b} ====================
-        // CFG: S → a S a | b S b | ε
         CFG cfg2 = new CFG('S');
         List<List<Character>> derivs2 = new ArrayList<>();
         derivs2.add(List.of('a', 'S', 'a'));
         derivs2.add(List.of('b', 'S', 'b'));
         derivs2.add(List.of());
-        Production p2 = new Production('S', derivs2);
-        cfg2.addProduction(p2);
+        cfg2.addProduction(new Production('S', derivs2));
+        printPDA(converter.convert(cfg2), "Test 2: S → aSa | bSb | ε   (even palindromes)");
 
-        PDA pda2 = converter.convert(cfg2);
-        printPDA(pda2, "Test 2: S → aSa | bSb | ε   (even palindromes)");
-
-        // ==================== TEST 3: Multiple variables - language {ab} ====================
-        // CFG: S → A B    A → a    B → b
         CFG cfg3 = new CFG('S');
+        cfg3.addProduction(new Production('S', List.of(List.of('A', 'B'))));
+        cfg3.addProduction(new Production('A', List.of(List.of('a'))));
+        cfg3.addProduction(new Production('B', List.of(List.of('b'))));
+        printPDA(converter.convert(cfg3), "Test 3: S→AB, A→a, B→b   (string \"ab\")");
 
-        List<List<Character>> derivsS = new ArrayList<>();
-        derivsS.add(List.of('A', 'B'));
-        Production pS = new Production('S', derivsS);
-        cfg3.addProduction(pS);
-
-        List<List<Character>> derivsA = new ArrayList<>();
-        derivsA.add(List.of('a'));
-        Production pA = new Production('A', derivsA);
-        cfg3.addProduction(pA);
-
-        List<List<Character>> derivsB = new ArrayList<>();
-        derivsB.add(List.of('b'));
-        Production pB = new Production('B', derivsB);
-        cfg3.addProduction(pB);
-
-        PDA pda3 = converter.convert(cfg3);
-        printPDA(pda3, "Test 3: S→AB, A→a, B→b   (string \"ab\")");
-
-        // ==================== TEST 4: Regular language (a*) ====================
-        // CFG: S → a S | ε
         CFG cfg4 = new CFG('S');
         List<List<Character>> derivs4 = new ArrayList<>();
         derivs4.add(List.of('a', 'S'));
         derivs4.add(List.of());
-        Production p4 = new Production('S', derivs4);
-        cfg4.addProduction(p4);
-
-        PDA pda4 = converter.convert(cfg4);
-        printPDA(pda4, "Test 4: S → aS | ε   (a*)");
+        cfg4.addProduction(new Production('S', derivs4));
+        printPDA(converter.convert(cfg4), "Test 4: S → aS | ε   (a*)");
     }
 }

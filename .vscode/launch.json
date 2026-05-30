@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Run Automata (Spring Boot)",
+            "request": "launch",
+            "mainClass": "com.automata.AutomataApplication",
+            "projectName": "automata-project"
+        }
+    ]
+}

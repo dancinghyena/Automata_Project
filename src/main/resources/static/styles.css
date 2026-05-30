@@ -1,0 +1,265 @@
+:root {
+    --bg: #0f1419;
+    --surface: #1a2332;
+    --border: #2d3a4f;
+    --text: #e7ecf3;
+    --muted: #8b9cb3;
+    --accent: #3d8bfd;
+    --accent-hover: #5a9fff;
+    --danger: #f07178;
+    --success: #7fd99a;
+    --radius: 10px;
+    --font: "Segoe UI", system-ui, -apple-system, sans-serif;
+    --mono: "Cascadia Code", "Consolas", monospace;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--font);
+    background: radial-gradient(ellipse at top, #1a2744 0%, var(--bg) 55%);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+.page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+}
+
+.hero h1 {
+    margin: 0 0 0.5rem;
+    font-size: 1.85rem;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    margin: 0;
+    color: var(--muted);
+    max-width: 42rem;
+}
+
+.panel {
+    margin-top: 1.75rem;
+    padding: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.panel h2 {
+    margin: 0 0 0.35rem;
+    font-size: 1.1rem;
+}
+
+.panel h3 {
+    margin: 1.5rem 0 0.5rem;
+    font-size: 0.95rem;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.hint {
+    margin: 0 0 1rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+}
+
+.hint code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--bg);
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.field-inline {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.input-sm,
+.select,
+.production-row input {
+    font: inherit;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.5rem 0.65rem;
+}
+
+.input-sm {
+    width: 3.5rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.select {
+    min-width: 14rem;
+}
+
+.productions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.production-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.production-row .lhs {
+    width: 3rem;
+    text-align: center;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.production-row .rhs {
+    width: 100%;
+}
+
+.production-row .arrow {
+    color: var(--muted);
+    font-family: var(--mono);
+}
+
+.btn {
+    font: inherit;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    padding: 0.55rem 1rem;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: var(--accent-hover);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+    border-color: var(--muted);
+}
+
+.btn-icon {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--muted);
+    padding: 0.35rem 0.5rem;
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.btn-icon:hover {
+    color: var(--danger);
+    border-color: var(--border);
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+}
+
+.error {
+    margin: 1rem 0 0;
+    color: var(--danger);
+    font-size: 0.9rem;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+th,
+td {
+    padding: 0.55rem 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background: var(--bg);
+    color: var(--muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+td.mono {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+}
+
+.tag {
+    display: inline-block;
+    padding: 0.15em 0.45em;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.tag-yes {
+    background: rgba(127, 217, 154, 0.15);
+    color: var(--success);
+}
+
+.tag-no {
+    color: var(--muted);
+}
+
+.results {
+    animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}

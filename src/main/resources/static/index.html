@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CFG → PDA Converter</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<main class="page">
+    <header class="hero">
+        <h1>CFG → PDA Converter</h1>
+        <p class="subtitle">
+            Enter a context-free grammar. The tool applies the standard construction that yields an equivalent pushdown automaton.
+        </p>
+    </header>
+
+    <section class="panel">
+        <div class="toolbar">
+            <label class="field-inline">
+                <span>Start symbol</span>
+                <input id="startSymbol" type="text" maxlength="1" value="S" class="input-sm">
+            </label>
+            <label class="field-inline">
+                <span>Example</span>
+                <select id="preset" class="select">
+                    <option value="">— choose —</option>
+                    <option value="anbn">aⁿbⁿ — S → aSb | ε</option>
+                    <option value="palindrome">Even palindromes — S → aSa | bSb | ε</option>
+                    <option value="ab">String ab — S → AB, A → a, B → b</option>
+                    <option value="astar">a* — S → aS | ε</option>
+                </select>
+            </label>
+        </div>
+
+        <h2>Productions</h2>
+        <p class="hint">One variable per row. Alternatives are comma-separated; use <code>ε</code> or leave blank for epsilon.</p>
+
+        <div id="productions" class="productions"></div>
+
+        <div class="actions">
+            <button type="button" id="addProduction" class="btn btn-secondary">+ Add production</button>
+            <button type="button" id="convert" class="btn btn-primary">Convert to PDA</button>
+        </div>
+        <p id="error" class="error" hidden></p>
+    </section>
+
+    <section id="results" class="panel results" hidden>
+        <h2>Resulting PDA</h2>
+
+        <h3>States</h3>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Start</th>
+                    <th>Accepting</th>
+                </tr>
+                </thead>
+                <tbody id="statesBody"></tbody>
+            </table>
+        </div>
+
+        <h3>Transitions</h3>
+        <p class="hint">Format: δ(q, input, pop) → push (ε = empty)</p>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Input</th>
+                    <th>Pop</th>
+                    <th>Push</th>
+                </tr>
+                </thead>
+                <tbody id="transitionsBody"></tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<script src="/app.js"></script>
+</body>
+</html>
